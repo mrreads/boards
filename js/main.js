@@ -13,25 +13,26 @@ allBoardAdd.forEach(boardAdd =>
         // создание доски
         eventBoard.target.insertAdjacentHTML('beforeBegin', 
         `<div class="board">
-            <h1 class="board-name">simple text</h1> 
+            <h1 class="board-name">simple text</h1>
+            <div class="tasks"></div>
             <p class="add">add another task</p>
         </div>`);
         ;
         
-        // new Sortable(boardAdd.previousElementSibling, 
-        // {
-        //     animation: 550,
-        //     filter: '.add',
-        //     ghostClass: 'inDragging'
-        // });
+        new Sortable(boardAdd.previousElementSibling.querySelector('.tasks'), 
+        {
+            animation: 550,
+            filter: '.add',
+            ghostClass: 'inDragging'
+        });
 
         // создание нового таска
         taskAdd = boardAdd.previousElementSibling.querySelector('.add');
         taskAdd.addEventListener('click', eventTask =>
         {
-            eventTask.target.insertAdjacentHTML('beforeBegin', `<p class="task">simple task</p>`);
+            eventTask.target.parentElement.querySelector('.tasks').insertAdjacentHTML('beforeEnd', `<p class="task">simple task</p>`);
             // правой кнопкой на таск
-            eventTask.target.previousElementSibling.addEventListener('contextmenu', lisneterTask);
+            eventTask.target.parentElement.querySelector('.tasks').lastChild.addEventListener('contextmenu', lisneterTask);
         });
 
         boardName = boardAdd.previousElementSibling.querySelector('.board-name');

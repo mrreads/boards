@@ -85,11 +85,13 @@ body, input, a, button
 
 .board > .board-name
 {
-	order: -1;
 	font-size: 26px;
+
+	order: -1;
 
 	margin-bottom: 15px;
 	padding: 5px 15px;
+
 	cursor: grab;
 	text-align: center;
 	text-transform: uppercase;
@@ -105,10 +107,11 @@ body, input, a, button
 	background-color: transparent;
 }
 
-.board > .task
+.board > .tasks > .task
 {
 	font-size: 18px;
 
+	width: 100%;
 	margin: 5px;
 	padding: 10px 15px;
 
@@ -116,7 +119,7 @@ body, input, a, button
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
-.board > textarea.task
+.board > .tasks > textarea.task
 {
 	font-family: "Fira Sans Condensed", sans-serif;
 	font-style: italic;
@@ -132,9 +135,11 @@ body, input, a, button
 
 .board > .add
 {
+	order: 16777271;
+
 	margin-top: auto;
 	padding-top: 15px;
-	order: 16777271;
+
 	cursor: pointer;
 	transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
 	text-align: center;
