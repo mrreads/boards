@@ -3,7 +3,7 @@ document.body.addEventListener('click', event => document.querySelector('.contex
 const boards = document.querySelector('#boards');
 
 let allBoardAdd = document.querySelectorAll('.board-add');
-let allTaskAdd, taskAdd, boardName, xPos, yPos;
+let allTaskAdd, taskAdd, boardName, xPos, yPos, task;
 
 allBoardAdd.forEach(boardAdd => 
 {
@@ -12,7 +12,6 @@ allBoardAdd.forEach(boardAdd =>
         eventBoard.target.insertAdjacentHTML('beforeBegin', 
         `<div class="board">
         <h1 class="board-name">simple text</h1>
-            <p class="task">simple task</p>
             <p class="add">add another task</p>
         </div>`);
 
@@ -21,6 +20,25 @@ allBoardAdd.forEach(boardAdd =>
         {
             eventTask.target.insertAdjacentHTML('beforeBegin', 
             `<p class="task">simple task</p>`);
+
+            eventTask.target.previousElementSibling.addEventListener('contextmenu', eventBoardName =>
+            {
+                document.querySelector('.context') ? document.querySelector('.context').remove() : null
+                
+                xPos = eventBoardName.clientX;
+                yPos = eventBoardName.clientY;
+    
+                document.body.insertAdjacentHTML('beforeBegin', 
+                `<div class="context" style="left: ${xPos}px; top: ${yPos}px"> 
+                    <p class="delete"> Delete task</p>
+                </div>`);
+    
+                document.querySelector('.context > .delete').addEventListener('click', eventDelete =>
+                {
+                    eventTask.target.previousElementSibling.remove();
+                    document.querySelector('.context') ? document.querySelector('.context').remove() : null
+                })
+            });
         });
 
         boardName = boardAdd.previousElementSibling.querySelector('.board-name');
@@ -33,8 +51,14 @@ allBoardAdd.forEach(boardAdd =>
 
             document.body.insertAdjacentHTML('beforeBegin', 
             `<div class="context" style="left: ${xPos}px; top: ${yPos}px"> 
-                <p> Delete board</p>
+                <p class="delete"> Delete board</p>
             </div>`);
+
+            document.querySelector('.context > .delete').addEventListener('click', eventDelete =>
+            {
+                eventBoardName.target.parentElement.remove();
+                document.querySelector('.context') ? document.querySelector('.context').remove() : null
+            })
         });
     });
 });
