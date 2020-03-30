@@ -19,7 +19,12 @@ allBoardAdd.forEach(boardAdd =>
 
         // создание нового таска
         taskAdd = boardAdd.previousElementSibling.querySelector('.add');
-        taskAdd.addEventListener('click', lisneterTask);
+        taskAdd.addEventListener('click', eventTask =>
+        {
+            eventTask.target.insertAdjacentHTML('beforeBegin', `<p class="task">simple task</p>`);
+            // правой кнопкой на таск
+            eventTask.target.previousElementSibling.addEventListener('contextmenu', lisneterTask);
+        });
 
         boardName = boardAdd.previousElementSibling.querySelector('.board-name');
         // right click on board name
@@ -84,66 +89,60 @@ function lisneterBoardName(eventBoardName)
     });
 }
 
-function lisneterTask(eventTask)
+function lisneterTask (eventTaskName)
 {
-    eventTask.target.insertAdjacentHTML('beforeBegin', 
-            `<p class="task">simple task</p>`);
-
-
-    // правой кнопкой на таск
-    eventTask.target.previousElementSibling.addEventListener('contextmenu', eventBoardName =>
-    {
-        document.querySelector('.context') ? document.querySelector('.context').remove() : null
+    document.querySelector('.context') ? document.querySelector('.context').remove() : null
         
-        xPos = eventBoardName.clientX;
-        yPos = eventBoardName.clientY;
+    xPos = eventTaskName.clientX;
+    yPos = eventTaskName.clientY;
 
-        document.body.insertAdjacentHTML('beforeBegin', 
-        `<div class="context" style="left: ${xPos}px; top: ${yPos}px"> 
-            <p class="edit"> Edit task </p>
-            <p class="delete"> Delete task</p>
-        </div>`);
+    document.body.insertAdjacentHTML('beforeBegin', 
+    `<div class="context" style="left: ${xPos}px; top: ${yPos}px"> 
+        <p class="edit"> Edit task </p>
+        <p class="delete"> Delete task</p>
+    </div>`);
 
-        document.querySelector('.context > .delete').addEventListener('click', eventDelete =>
+    document.querySelector('.context > .delete').addEventListener('click', eventDelete =>
+    {
+        eventTaskName.target.remove();
+        document.querySelector('.context') ? document.querySelector('.context').remove() : null
+    });
+
+    document.querySelector('.context > .edit').addEventListener('click', eventDelete =>
+    {
+        temp = document.createElement('textarea');
+        temp.classList.add('task');
+        temp.value = eventTaskName.target.innerHTML;
+
+        temp.addEventListener('contextmenu', eventTaskName =>
         {
-            eventTask.target.previousElementSibling.remove();
             document.querySelector('.context') ? document.querySelector('.context').remove() : null
-        });
+            
+            xPos = eventTaskName.clientX;
+            yPos = eventTaskName.clientY;
 
-        document.querySelector('.context > .edit').addEventListener('click', eventDelete =>
-        {
-            temp = document.createElement('textarea');
-            temp.classList.add('task');
-            temp.value = eventBoardName.target.innerHTML;
+            document.body.insertAdjacentHTML('beforeBegin', 
+            `<div class="context" style="left: ${xPos}px; top: ${yPos}px"> 
+                <p class="save"> Save name</p>
+            </div>`);
 
-            temp.addEventListener('contextmenu', eventBoardName =>
+
+            document.querySelector('.context > .save').addEventListener('click', eventSave =>
             {
+                temp = document.createElement('p');
+                temp.classList.add('task');
+                temp.textContent = eventTaskName.target.value;
+
+                temp.addEventListener('contextmenu', lisneterTask);
+
+                eventTaskName.target.parentNode.replaceChild(temp, eventTaskName.target);
+                
                 document.querySelector('.context') ? document.querySelector('.context').remove() : null
                 
-                xPos = eventBoardName.clientX;
-                yPos = eventBoardName.clientY;
-
-                document.body.insertAdjacentHTML('beforeBegin', 
-                `<div class="context" style="left: ${xPos}px; top: ${yPos}px"> 
-                    <p class="save"> Save name</p>
-                </div>`);
-
-
-                document.querySelector('.context > .save').addEventListener('click', eventSave =>
-                {
-                    temp = document.createElement('p');
-                    temp.classList.add('task');
-                    temp.textContent = eventBoardName.target.value;
-                    temp.addEventListener('contextmenu', lisneterBoardName);
-                    eventBoardName.target.parentNode.replaceChild(temp, eventBoardName.target);
-                    
-                    document.querySelector('.context') ? document.querySelector('.context').remove() : null
-                    
-                })
-            });
-
-            eventBoardName.target.parentNode.replaceChild(temp, eventBoardName.target);
-            document.querySelector('.context') ? document.querySelector('.context').remove() : null
+            })
         });
+
+        eventTaskName.target.parentNode.replaceChild(temp, eventTaskName.target);
+        document.querySelector('.context') ? document.querySelector('.context').remove() : null
     });
 }
