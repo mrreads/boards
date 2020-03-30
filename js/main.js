@@ -1,3 +1,5 @@
+document.addEventListener('contextmenu', event => event.preventDefault());
+
 const boards = document.querySelector('#boards');
 
 let allBoardAdd = document.querySelectorAll('.board-add');
@@ -7,7 +9,7 @@ allBoardAdd.forEach(boardAdd =>
 {
     boardAdd.addEventListener('click', eventBoard => 
     {
-        let arr = eventBoard.target.insertAdjacentHTML('beforeBegin', 
+        eventBoard.target.insertAdjacentHTML('beforeBegin', 
         `<div class="board">
         <h1 class="board-name">simple text</h1>
             <p class="task">simple task</p>
@@ -20,6 +22,8 @@ allBoardAdd.forEach(boardAdd =>
             eventTask.target.insertAdjacentHTML('beforeBegin', 
             `<p class="task">simple task</p>`);
         });
+
+
     });
 });
 
