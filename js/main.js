@@ -160,7 +160,6 @@ new Sortable(boards,
 {
     handle: '.board-name',
     animation: 550,
-    swapThreshold: 1,
     filter: '.board-add',
     ghostClass: 'inDragging'
 });
