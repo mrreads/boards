@@ -206,3 +206,23 @@ body, input, a, button
 {
 	transform: scale(1.05) !important;
 }
+
+@media screen and (max-width: 768px)
+{
+	#boards
+	{
+		padding: 15px;
+	}
+}
+
+@media screen and (max-width: 425px)
+{
+	#boards
+	{
+		padding: 5px;
+	}
+	.board
+	{
+		padding: 25px 15px;
+	}
+}	
