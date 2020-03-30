@@ -1,5 +1,6 @@
 document.addEventListener('contextmenu', event => event.preventDefault());
 document.body.addEventListener('click', event => document.querySelector('.context') ? document.querySelector('.context').remove() : null)
+
 const boards = document.querySelector('#boards');
 
 let allBoardAdd = document.querySelectorAll('.board-add');
@@ -12,10 +13,17 @@ allBoardAdd.forEach(boardAdd =>
         // создание доски
         eventBoard.target.insertAdjacentHTML('beforeBegin', 
         `<div class="board">
-        <h1 class="board-name">simple text</h1>
+            <h1 class="board-name">simple text</h1> 
             <p class="add">add another task</p>
         </div>`);
-
+        ;
+        
+        // new Sortable(boardAdd.previousElementSibling, 
+        // {
+        //     animation: 550,
+        //     filter: '.add',
+        //     ghostClass: 'inDragging'
+        // });
 
         // создание нового таска
         taskAdd = boardAdd.previousElementSibling.querySelector('.add');
@@ -146,3 +154,12 @@ function lisneterTask (eventTaskName)
         document.querySelector('.context') ? document.querySelector('.context').remove() : null
     });
 }
+
+new Sortable(boards, 
+{
+    handle: '.board-name',
+    animation: 550,
+    swapThreshold: 1,
+    filter: '.board-add',
+    ghostClass: 'inDragging'
+});

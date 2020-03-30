@@ -42,8 +42,8 @@ body
 
 	min-height: 100%;
 
-	background-color: #3A7BD5;
 	background: linear-gradient(to right, #00D2FF, #3A7BD5);
+	background-color: #3A7BD5;
 }
 
 body, input, a, button
@@ -68,7 +68,8 @@ body, input, a, button
 .board
 {
 	display: inline-flex;
-	/* align-self: flex-start; */
+
+/* align-self: flex-start; */
 	flex-flow: column nowrap;
 
 	width: 100%;
@@ -84,12 +85,12 @@ body, input, a, button
 
 .board > .board-name
 {
+	order: -1;
 	font-size: 26px;
 
 	margin-bottom: 15px;
 	padding: 5px 15px;
-
-	cursor: move;
+	cursor: grab;
 	text-align: center;
 	text-transform: uppercase;
 }
@@ -131,8 +132,9 @@ body, input, a, button
 
 .board > .add
 {
-	padding-top: 15px;
 	margin-top: auto;
+	padding-top: 15px;
+	order: 16777271;
 	cursor: pointer;
 	transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
 	text-align: center;
@@ -148,6 +150,8 @@ body, input, a, button
 
 .board-add
 {
+	order: 16777271;
+
 	width: 100%;
 	height: min-content;
 	padding: 15px;
@@ -191,4 +195,9 @@ body, input, a, button
 .context > a:hover, .context > p:hover
 {
 	background-color: rgb(218, 218, 218);
+}
+
+.inDragging
+{
+	transform: scale(1.05) !important;
 }
