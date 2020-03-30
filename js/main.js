@@ -81,7 +81,7 @@ function lisneterBoardName(eventBoardName)
 
         eventBoardName.target.parentNode.replaceChild(temp, eventBoardName.target);
         document.querySelector('.context') ? document.querySelector('.context').remove() : null
-    })
+    });
 }
 
 function lisneterTask(eventTask)
@@ -108,6 +108,42 @@ function lisneterTask(eventTask)
         {
             eventTask.target.previousElementSibling.remove();
             document.querySelector('.context') ? document.querySelector('.context').remove() : null
-        })
+        });
+
+        document.querySelector('.context > .edit').addEventListener('click', eventDelete =>
+        {
+            temp = document.createElement('textarea');
+            temp.classList.add('task');
+            temp.value = eventBoardName.target.innerHTML;
+
+            temp.addEventListener('contextmenu', eventBoardName =>
+            {
+                document.querySelector('.context') ? document.querySelector('.context').remove() : null
+                
+                xPos = eventBoardName.clientX;
+                yPos = eventBoardName.clientY;
+
+                document.body.insertAdjacentHTML('beforeBegin', 
+                `<div class="context" style="left: ${xPos}px; top: ${yPos}px"> 
+                    <p class="save"> Save name</p>
+                </div>`);
+
+
+                document.querySelector('.context > .save').addEventListener('click', eventSave =>
+                {
+                    temp = document.createElement('p');
+                    temp.classList.add('task');
+                    temp.textContent = eventBoardName.target.value;
+                    temp.addEventListener('contextmenu', lisneterBoardName);
+                    eventBoardName.target.parentNode.replaceChild(temp, eventBoardName.target);
+                    
+                    document.querySelector('.context') ? document.querySelector('.context').remove() : null
+                    
+                })
+            });
+
+            eventBoardName.target.parentNode.replaceChild(temp, eventBoardName.target);
+            document.querySelector('.context') ? document.querySelector('.context').remove() : null
+        });
     });
 }
