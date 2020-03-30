@@ -1,9 +1,9 @@
 document.addEventListener('contextmenu', event => event.preventDefault());
-
+document.body.addEventListener('click', event => document.querySelector('.context') ? document.querySelector('.context').remove() : null)
 const boards = document.querySelector('#boards');
 
 let allBoardAdd = document.querySelectorAll('.board-add');
-let allTaskAdd, taskAdd;
+let allTaskAdd, taskAdd, boardName, xPos, yPos;
 
 allBoardAdd.forEach(boardAdd => 
 {
@@ -23,7 +23,19 @@ allBoardAdd.forEach(boardAdd =>
             `<p class="task">simple task</p>`);
         });
 
+        boardName = boardAdd.previousElementSibling.querySelector('.board-name');
+        boardName.addEventListener('contextmenu', eventBoardName =>
+        {
+            document.querySelector('.context') ? document.querySelector('.context').remove() : null
+            
+            xPos = eventBoardName.clientX;
+            yPos = eventBoardName.clientY;
 
+            document.body.insertAdjacentHTML('beforeBegin', 
+            `<div class="context" style="left: ${xPos}px; top: ${yPos}px"> 
+                <p> Delete board</p>
+            </div>`);
+        });
     });
 });
 
