@@ -1,5 +1,23 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans+Condensed&display=swap");
 
+
+::-webkit-scrollbar-track
+{
+	background-color: #3A7BD5;
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+
+	background-color: #3A7BD5;;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #FFFFFF;
+}
+
 *, *::before, *::after
 {
 	box-sizing: border-box;
@@ -20,8 +38,11 @@ html
 
 body
 {
+	display: flex;
+
 	min-height: 100%;
 
+	background-color: #3A7BD5;
 	background: linear-gradient(to right, #00D2FF, #3A7BD5);
 }
 
@@ -32,29 +53,39 @@ body, input, a, button
 
 #boards
 {
-	display: flex;
-	flex-flow: row wrap;
+	display: grid;
+	overflow: auto;
+
+	width: 100%;
+	height: 100%;
+	padding: 25px;
+
+	grid-gap: 25px;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-rows: min-content;
 }
 
 .board
 {
 	display: inline-flex;
+	/* align-self: flex-start; */
 	flex-flow: column nowrap;
 
 	width: 100%;
-	max-width: 300px;
-	margin: 25px;
 	padding: 25px;
 
 	transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
 
 	background-color: rgba(255, 255, 255, 0.9);
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+	justify-self: stretch;
 }
 
 .board > .board-name
 {
-    font-size: 26px;
+	font-size: 26px;
+
 	margin-bottom: 15px;
 	padding: 5px 15px;
 
@@ -65,37 +96,43 @@ body, input, a, button
 
 .board > input.board-name
 {
+	font-family: "Fira Sans Condensed", sans-serif;
+	font-weight: bold;
 	font-style: italic;
-    font-weight: bold;
-    font-family: "Fira Sans Condensed", sans-serif;
-    background-color: transparent;
-    border: 0;    
+
+	border: 0;
+	background-color: transparent;
 }
 
 .board > .task
 {
+	font-size: 18px;
+
 	margin: 5px;
 	padding: 10px 15px;
-    font-size: 18px;    
+
 	background-color: rgba(255, 255, 255, 0.9);
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .board > textarea.task
 {
+	font-family: "Fira Sans Condensed", sans-serif;
 	font-style: italic;
-    font-family: "Fira Sans Condensed", sans-serif;
-	border: 0;
-	resize: vertical;
+
 	height: 42px;
 	min-height: 42px;
 	max-height: 200px;
+
+	resize: vertical;
+
+	border: 0;
 }
 
 .board > .add
 {
 	padding-top: 15px;
-
+	margin-top: auto;
 	cursor: pointer;
 	transition: all 0.3s cubic-bezier(0.25,0.8,0.25,1);
 	text-align: center;
@@ -111,9 +148,8 @@ body, input, a, button
 
 .board-add
 {
-	width: 300px;
+	width: 100%;
 	height: min-content;
-	margin: 25px;
 	padding: 15px;
 
 	cursor: pointer;
